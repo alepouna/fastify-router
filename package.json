@@ -1,0 +1,23 @@
+{
+  "name": "fastifyrouter.js",
+  "version": "1.0.1",
+  "description": "A simple router loader for fastify servers",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auroraisluna/fastify-router.git"
+  },
+  "keywords": [
+    "fastify",
+    "router"
+  ],
+  "author": "Aurora Takemi",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/auroraisluna/fastify-router/issues"
+  },
+  "homepage": "https://github.com/auroraisluna/fastify-router#readme"
+}

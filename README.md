@@ -7,6 +7,11 @@ Please note I use this for my personal projects, its not meant to be fast, effic
 
 Read through this entire document for instructions on how to use this!  
 
+## Installation
+
+Install via NPM (https://www.npmjs.com/package/fastifyrouter.js)
+`npm i fastifyrouter.js`
+
 ## Use
 
 Here's how to use this tool
