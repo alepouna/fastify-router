@@ -15,6 +15,8 @@ export async function loadRoutes(fastify, options, logger) {
     if (!options) throw new Error('No options provided');
     if (!options.dir) throw new Error('No home directory provided (example ./src/server/routes/public)');
 
+    if (options.log) console.log('verbose', 'fastify-router', 'Loading routes...');
+
     const routesPath = path.join(__dirname, `${options.dir}`); //Setting the directory were looding routes from
 
     async function loadFiles(current_location) { 
@@ -35,22 +37,22 @@ export async function loadRoutes(fastify, options, logger) {
                     routeHandler = routeHandler.default; //
 
                     //Params parser
-                    let routeURL = routePath.pathname.split(`${options.dir}`)[1]; 
+                    let routeExtension = routesPath.split('\\').pop().split('/').pop(); //Get the last part of the path
+                    let routeURL = routePath.pathname.split(`${routeExtension}`)[1]; 
                     routeURL = routeURL.replace(/\[/g, ':');
                     routeURL = routeURL.replace(/\]/g, '');
                     routeURL = routeURL.replace(/\.js/g, '');
                     routeURL = routeURL.replace(/\.mjs/g, '');
 
                     //REST method parser
-                    let routeMethod;
-                    if (!options.method) {
-                        routeMethod = path.basename(routeURL);
+                    let routeMethod = path.basename(routeURL);
+                    if (routeMethod.split('-')[1]) {
                         routeMethod = routeMethod.split('-')[0];
                         
                         routeURL = routeURL.replace(`${routeMethod}-`, '');
                         routeMethod = routeMethod.toUpperCase();
                     } else {
-                        routeMethod = options.method;
+                        routeMethod = options.method || 'GET';
                     };
 
                     //Index parser
@@ -58,13 +60,13 @@ export async function loadRoutes(fastify, options, logger) {
 
                     //If we have all the required information
                     if (routeHandler && routeURL) { 
-                        if (options.log) console.log('verbose', 'fastify-router', `Registering ${options.dir} route ${routeMethod}:${routeURL}`, );
+                        if (options.log) console.log('verbose', 'fastify-router', `Setting route from '${routeExtension}' as ${routeMethod}:${routeURL}`, );
                         await fastify.route({ //Set route in fastify
                             method: routeMethod,
                             url: routeURL,
                             handler: routeHandler
                         });
-                        if (options.log) console.log('verbose', 'fastify-router', `Registered ${options.dir} route ${routeMethod}:${routeURL}`);
+                        if (options.log) console.log('verbose', 'fastify-router', `Registered route from '${routeExtension}' as ${routeMethod}:${routeURL} ✅`);
                     };
 
                 };

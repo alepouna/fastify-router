@@ -26,13 +26,14 @@ import { loadRoutes } from '/path/to/index.mjs'
 import Fastify from 'fastify';
 const fastify = Fastify();
 
-await loadRoutes(fastify, { dir: './src/routes/', log: true});
+await loadRoutes(fastify, { dir: './src/routes/', log: true, method: 'GET' });
 ```
 
 #### Options: 
 
 - dir: the directory of all the routes you want to load, its using the current module dir so if the module is in `node_modules/blah` and your routes in `src/routes`, you will have to set it as `../src/routes`
 - log: log to console some debug/verbose messages [optional]
+- method: which method to use as a default (if one not defined in the file name) [optional]
 
 ### On your route file
 
@@ -56,7 +57,7 @@ Queries are handled by fastify already, you don't have to do special definitions
 
 #### But what about REST? 
 All routes MUST contain the rest method in the file name, followed by a `-` and the path. example: `GET-index.js`, `POST-index.js`, `SET-index.js` etc. 
-If the a method does NOT contain one, it will assume GET is to be used.
+If the a method does NOT contain one, it will use the default method you set in the options. (if none is set, it will use `GET`)
 I can not verify if `ANY`/`ALL` works, as my results are inconclusive. If you can replicate/use, please make an issue request so I can remove this statement :)  
 
 ## Contributing: 

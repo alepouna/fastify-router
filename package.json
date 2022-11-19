@@ -1,6 +1,6 @@
 {
   "name": "fastifyrouter.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple router loader for fastify servers",
   "main": "index.mjs",
   "scripts": {
