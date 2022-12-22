@@ -14,6 +14,13 @@ export async function loadRoutes(fastify, options, logger) {
     //Check options
     if (!options) throw new Error('No options provided');
     if (!options.dir) throw new Error('No home directory provided (example ./src/server/routes/public)');
+    //Remove trailing slash from dir
+    if (options.dir.endsWith('/')) options.dir = options.dir.slice(0, -1);
+    //Check if prefix starts with a slash and remove trailing slash
+    if (options.prefix) {
+        if (!options.prefix.startsWith('/')) options.prefix = '/' + options.prefix;
+        if (options.prefix.endsWith('/')) options.prefix = options.prefix.slice(0, -1);
+    };
 
     if (options.log) console.log('verbose', 'fastify-router', 'Loading routes...');
 
@@ -57,6 +64,9 @@ export async function loadRoutes(fastify, options, logger) {
 
                     //Index parser
                     if (path.basename(routeURL) === 'index') routeURL = path.dirname(routeURL);
+
+                    //Prefix parser
+                    if (options.prefix) routeURL = `${options.prefix}${routeURL}`;
 
                     //If we have all the required information
                     if (routeHandler && routeURL) { 

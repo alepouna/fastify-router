@@ -21,12 +21,14 @@ Here's how to use this tool
 Call the loadRoutes function, inject fastify and options and voila!
 ```js
 import { loadRoutes } from '/path/to/index.mjs'
+//or from npm
+import { loadRoutes } from 'fastifyrouter.js';
 
 //Example fastify server 
 import Fastify from 'fastify';
 const fastify = Fastify();
 
-await loadRoutes(fastify, { dir: './src/routes/', log: true, method: 'GET' });
+await loadRoutes(fastify, { dir: './src/routes/', log: true, method: 'GET', prefix: '/home' });
 ```
 
 #### Options: 
@@ -34,6 +36,7 @@ await loadRoutes(fastify, { dir: './src/routes/', log: true, method: 'GET' });
 - dir: the directory of all the routes you want to load, its using the current module dir so if the module is in `node_modules/blah` and your routes in `src/routes`, you will have to set it as `../src/routes`
 - log: log to console some debug/verbose messages [optional]
 - method: which method to use as a default (if one not defined in the file name) [optional]
+- prefix: add a prefix to the path. if you are using a folder organization structure, the prefix will not be included by default, so we add this option to mitage this (see issue #3)
 
 ### On your route file
 
